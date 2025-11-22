@@ -172,7 +172,7 @@ header {
 }
 
 h1 {
-    font-size: 4.5rem;
+    font-size: 5rem;
     line-height: 1.05;
     font-weight: 800;
     margin-bottom: 1.5rem;
@@ -365,6 +365,14 @@ background-image: url('data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAM
     }
     
     .glow-effect { left: 50%; width: 100%; }
+    
+    .presentation {
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    line-height: 1.4;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
 }
 
 /* --- PAGE CHRONOLOGIE --- */
@@ -535,3 +543,4 @@ background-image: url('data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAM
         right: auto;
     }
 }
+
