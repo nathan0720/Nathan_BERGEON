@@ -349,3 +349,170 @@ h1 {
     
     .glow-effect { left: 50%; width: 100%; }
 }
+/* --- PAGE CHRONOLOGIE --- */
+
+.page-title {
+    text-align: center;
+    margin-bottom: 4rem;
+    margin-top: 2rem;
+}
+
+.page-title h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.page-title p {
+    color: #9ca3af;
+}
+
+/* Container de la Timeline */
+.timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+/* La ligne centrale verticale */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #1e293b; /* Gris foncé bleu */
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+
+/* Les items (boites) */
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+/* Positionnement Gauche */
+.timeline-item.left {
+    left: 0;
+    text-align: right; /* Texte aligné vers la ligne centrale */
+}
+
+/* Positionnement Droite */
+.timeline-item.right {
+    left: 50%;
+    text-align: left;
+}
+
+/* Les Icones Rondes au centre */
+.timeline-icon {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: -20px; /* Pour centrer sur la ligne (items de gauche) */
+    background-color: #050505;
+    border: 1px solid #06b6d4; /* Bordure cyan */
+    border-radius: 50%;
+    z-index: 10;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #06b6d4;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4); /* Lueur bleue */
+}
+
+/* Correction position icone pour items de droite */
+.timeline-item.right .timeline-icon {
+    left: -20px; 
+}
+
+/* Le contenu (la boite grise) */
+.timeline-content {
+    padding: 20px 30px;
+    background-color: #111111; /* Fond gris très sombre */
+    border-radius: 12px;
+    border: 1px solid #333;
+    position: relative;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateY(-5px);
+    border-color: #06b6d4; /* Bordure s'éclaire au survol */
+}
+
+/* Badges de date */
+.date-badge {
+    display: inline-block;
+    background-color: #164e63; /* Fond cyan foncé */
+    color: #22d3ee;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.date-badge-outline {
+    display: inline-block;
+    border: 1px solid #333;
+    color: #9ca3af;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.timeline-content h3 {
+    font-size: 1.25rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.timeline-content h4 {
+    font-size: 1rem;
+    color: #94a3b8;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.timeline-content p {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* --- RESPONSIVE TIMELINE (Mobile) --- */
+@media screen and (max-width: 768px) {
+    /* La ligne se déplace à gauche */
+    .timeline::after {
+        left: 31px;
+    }
+    
+    /* Les items prennent toute la largeur */
+    .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+        text-align: left !important; /* Force l'alignement gauche partout */
+    }
+    
+    /* On annule le décalage de 50% pour la droite */
+    .timeline-item.right {
+        left: 0%;
+    }
+    
+    /* On remet les icones à gauche */
+    .timeline-item.left .timeline-icon, 
+    .timeline-item.right .timeline-icon {
+        left: 11px; /* Centré sur la ligne à 31px */
+        right: auto;
+    }
+}
