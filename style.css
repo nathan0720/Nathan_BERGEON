@@ -449,7 +449,7 @@ h1 {
 }
 
 /* --- RESPONSIVE TIMELINE (Mobile) --- */
-@media screen and (max-width: 800px) {
+@media (max-width: 800px) {
     /* La ligne se déplace à gauche */
     .timeline::after {
         left: 31px;
@@ -510,7 +510,8 @@ h1 {
     /* CORRECTION DU DÉPASSEMENT : Taille de police réduite */
     h1 { 
         font-size: 2.5rem; /* Réduction à 2.5rem pour éviter le débordement */
-        /* Vous pouvez aussi utiliser font-size: 8vw; pour plus de flexibilité sur petits écrans */
+        font-size: 8vw;
+        
     } 
     
     .description {
