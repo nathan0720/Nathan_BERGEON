@@ -493,7 +493,6 @@ h1 {
     /* Styles du corps de page sur mobile */
     .hero {
         flex-direction: column-reverse;
-        text-align: center;
         padding-top: 2rem;
         gap: 3rem;
         
