@@ -38,15 +38,21 @@
                 <h3>Mes Coordonnées</h3> <p class="info-intro"></p>
                 
                 <div class="info-item">
-                    <span class="info-icon">📞</span> <div>
+                    <span class="info-icon">📞</span> 
+                    <div>
                         <span class="info-label">Téléphone</span>
-                        <p class="info-value"><a href="tel:+330749725817">07 49 72 58 17</a></p> </div>
+                        <p class="info-value"><a href="tel:+330749725817" target="_blank" >07 49 72 58 17</a></p> 
+                    </div>
                 </div>
 
                 <div class="info-item">
-                    <span class="info-icon">📧</span> <div>
-                        <span class="info-label">Email</span>
-                        <p class="info-value"><a href="nathan.bergeon@gmail.com"></a>nathan.bergeon@gmail.com</p> </div>
+                    <span class="info-icon">📍</span>
+                    <div>
+                        <span class="info-label">Localisation</span>
+                        <p class="info-value">
+                            <a href="geo:49.0562,2.0085?q=Menucourt+95180+France" target="_blank">Menucourt 95180, France</a>
+                        </p>
+                    </div>
                 </div>
 
                 <div class="info-item">
@@ -60,19 +66,23 @@
             <div class="contact-form-box">
                 <form action="https://formspree.io/f/mrbdyage" method="POST">
                     <div class="form-group">
-                        <label for="name">Nom complet</label>
+                        <label for="name">Nom*</label>
                         <input type="text" id="name" name="name" placeholder="Votre nom" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="name">Prénom</label>
+                        <input type="text" id="name" name="name" placeholder="Votre Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email*</label>
                         <input type="email" id="email" name="email" placeholder="votre@email.com" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Sujet</label>
+                        <label for="subject">Sujet*</label>
                         <input type="text" id="subject" name="subject" placeholder="Le sujet de votre message" required>
                     </div>
                     <div class="form-group">
-                        <label for="message">Message</label>
+                        <label for="message">Message*</label>
                         <textarea id="message" name="message" rows="5" placeholder="Votre message ici..." required></textarea>
                     </div>
                     <button type="submit" class="submit-btn">Envoyer le message</button>
@@ -83,7 +93,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Nathan Bergeon. Tous droits réservés.</p>
+        <p>&copy; Nathan Bergeon. Tous droits réservés.</p>
     </footer>
 
     <script>
