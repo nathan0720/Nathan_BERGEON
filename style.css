@@ -764,18 +764,24 @@ header {
     color: #ccc;
 }
 
+/* Bloc de code (Sucette.html) */
 .code-block {
     background-color: #1e1e1e; 
     color: #d4d4d4; 
     padding: 20px;
     border-radius: 8px;
     font-family: 'Courier New', monospace;
-    overflow-x: auto; /* Maintient le défilement horizontal */
+    
+    /* 1. Force le bloc à ne jamais dépasser la largeur de son parent */
+    max-width: 100%; 
+    
+    /* 2. Ajoute une barre de défilement horizontale si le contenu déborde */
+    overflow-x: auto; 
+    
     border: 1px solid #333;
     margin-top: 1rem;
     font-size: 0.9rem;
     line-height: 1.5;
-    max-width: 100%; 
 }
 
 /* Sidebar (Détails à droite) */
