@@ -56,10 +56,9 @@ ul {
 }
 
 a.lien {
-    color: var(--accent-blue);
-    font-weight: 500;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    color: var(--text-main);
+    font-weight: 10;
+    text-underline-offset: 1px;
 }
 a.lien:hover {
     color: var(--text-main);
@@ -183,11 +182,13 @@ header {
     margin-bottom: 4rem;
     margin-top: 2rem;
 }
+
 .page-title h1 {
     font-size: 3rem;
     font-weight: 800;
     margin-bottom: 0.5rem;
 }
+
 .page-title p {
     color: var(--text-muted);
 }
@@ -211,6 +212,7 @@ header {
     color: #000;
     border: 2px solid var(--text-main);
 }
+
 .btn-primary:hover {
     background-color: #e5e5e5;
     border-color: #e5e5e5;
@@ -1075,5 +1077,54 @@ footer {
     .contact-info-box, .contact-form-box {
         width: 100%;
         padding: 1.5rem;
+    }
+}
+
+/* --- NOUVEAU STYLE POUR BOUTON COPIER ET LAYOUT DE CODE --- */
+
+.code-header {
+    display: flex;
+    justify-content: space-between; /* Aligne le titre à gauche et le bouton à droite */
+    align-items: center;
+    margin-bottom: 0.5rem; /* Ajuste l'espace entre le header et le code */
+}
+
+.code-header .section-title {
+    margin-bottom: 0; /* Retire la marge inférieure par défaut du titre de section */
+}
+
+.copy-btn {
+    background-color: #333;
+    color: var(--text-main);
+    padding: 8px 15px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #000;
+}
+
+.copy-btn.copied {
+    background-color: #10b981; /* Vert pour indiquer que c'est copié */
+    border-color: #10b981;
+    color: #fff;
+}
+
+/* Ajustement pour les petits écrans */
+@media (max-width: 600px) {
+    .code-header {
+        flex-direction: column; /* Empile le titre et le bouton */
+        align-items: flex-start;
+        gap: 10px;
     }
 }
