@@ -31,7 +31,11 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Force la coupure horizontale */
+    position: relative; /* Aide à stabiliser le viewport sur mobile */
+}
 body {
     background-color: var(--bg-body);
     color: var(--text-main);
@@ -214,8 +218,8 @@ header {
 }
 
 .btn-primary:hover {
-    background-color: #e5e5e5;
-    border-color: #e5e5e5;
+    background-color: #c8c8c8;
+    border-color: #c8c8c8;
 }
 
 .btn-secondary {
@@ -764,20 +768,12 @@ header {
     color: #ccc;
 }
 
-/* Bloc de code (Sucette.html) */
 .code-block {
     background-color: #1e1e1e; 
     color: #d4d4d4; 
     padding: 20px;
     border-radius: 8px;
     font-family: 'Courier New', monospace;
-    
-    /* 1. Force le bloc à ne jamais dépasser la largeur de son parent */
-    max-width: 100%; 
-    
-    /* 2. Ajoute une barre de défilement horizontale si le contenu déborde */
-    overflow-x: auto; 
-    
     border: 1px solid #333;
     margin-top: 1rem;
     font-size: 0.9rem;
@@ -1032,6 +1028,14 @@ footer {
         padding-right: 0;
         justify-content: center;
         width: 100%;
+        overflow: hidden;
+    }
+    .glow-effect {
+        width: 300px;  /* Réduit de 500px à 300px */
+        height: 300px; /* Réduit de 500px à 300px */
+        left: 50%;     /* Centre la lueur */
+        top: 50%;
+        transform: translate(-50%, -50%); /* Assure le centrage parfait */
     }
     .image-card {
         width: 100%;
@@ -1083,54 +1087,5 @@ footer {
     .contact-info-box, .contact-form-box {
         width: 100%;
         padding: 1.5rem;
-    }
-}
-
-/* --- NOUVEAU STYLE POUR BOUTON COPIER ET LAYOUT DE CODE --- */
-
-.code-header {
-    display: flex;
-    justify-content: space-between; /* Aligne le titre à gauche et le bouton à droite */
-    align-items: center;
-    margin-bottom: 0.5rem; /* Ajuste l'espace entre le header et le code */
-}
-
-.code-header .section-title {
-    margin-bottom: 0; /* Retire la marge inférieure par défaut du titre de section */
-}
-
-.copy-btn {
-    background-color: #333;
-    color: var(--text-main);
-    padding: 8px 15px;
-    border: 1px solid #444;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.copy-btn:hover {
-    background-color: var(--accent-blue);
-    border-color: var(--accent-blue);
-    color: #000;
-}
-
-.copy-btn.copied {
-    background-color: #10b981; /* Vert pour indiquer que c'est copié */
-    border-color: #10b981;
-    color: #fff;
-}
-
-/* Ajustement pour les petits écrans */
-@media (max-width: 600px) {
-    .code-header {
-        flex-direction: column; /* Empile le titre et le bouton */
-        align-items: flex-start;
-        gap: 10px;
     }
 }
