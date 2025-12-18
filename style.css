@@ -758,10 +758,9 @@ header {
     font-family: 'Courier New', monospace;
     max-width: 100%; 
     
-    /* MODIFICATIONS ICI */
-    white-space: pre-wrap;       /* Force le retour à la ligne automatique */
-    word-wrap: break-word;       /* Coupe les mots trop longs si nécessaire */
-    overflow-x: hidden;          /* Supprime la barre de défilement horizontale */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: hidden;
     
     border: 1px solid #333;
     margin-top: 1rem;
@@ -1016,7 +1015,6 @@ footer {
 /* = 10. RESPONSIVE (MOBILE) = */
 
 @media (max-width: 950px) {
-    /* Header & Nav */
     .desktop-nav {
         display: none;
     }
@@ -1126,7 +1124,6 @@ footer {
         font-size: 2.5rem;
     }
 
-    /* Contact */
     .contact-grid-layout {
         flex-direction: column;
     }
@@ -1139,4 +1136,21 @@ footer {
         align-items: flex-start;
         gap: 10px;
     }
+    .code-block {
+    background-color: #1e1e1e; 
+    color: #d4d4d4; 
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    max-width: 100%; 
+    
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    
+    border: 1px solid #333;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
 }
