@@ -1,6 +1,4 @@
-/* ========================================================= */
-/* === 1. VARIABLES & RESET (BASE) === */
-/* ========================================================= */
+/* = 1. VARIABLES & RESET (BASE) =*/
 
 :root {
     /* --- Couleurs --- */
@@ -42,7 +40,6 @@ body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
-    /* Padding pour compenser le header fixe */
     padding-top: var(--header-height);
     display: flex;
     flex-direction: column;
@@ -76,9 +73,7 @@ a.lien:hover {
     width: 100%;
 }
 
-/* ========================================================= */
-/* === 2. HEADER & NAVIGATION === */
-/* ========================================================= */
+/* = 2. HEADER & NAVIGATION = */
 
 header {
     position: fixed;
@@ -109,7 +104,6 @@ header {
     color: var(--accent-blue);
 }
 
-/* Menu Desktop */
 .desktop-nav ul {
     display: flex;
     gap: 2.5rem;
@@ -133,7 +127,6 @@ header {
     opacity: 1;
 }
 
-/* Bouton Hamburger (Mobile) */
 .hamburger-btn {
     display: none; /* Caché sur PC */
     cursor: pointer;
@@ -176,9 +169,7 @@ header {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* ========================================================= */
-/* === 3. COMPOSANTS RÉUTILISABLES (BOUTONS, TITRES) === */
-/* ========================================================= */
+/* = 3. COMPOSANTS RÉUTILISABLES (BOUTONS, TITRES) = */
 
 /* Titres de pages (ex: "Mes Projets", "Mon Parcours") */
 .page-title {
@@ -240,9 +231,7 @@ header {
     color: #aaa;
 }
 
-/* ========================================================= */
-/* === 4. PAGE ACCUEIL (HERO) === */
-/* ========================================================= */
+/* = 4. PAGE ACCUEIL (HERO) = */
 
 .hero {
     display: flex;
@@ -258,7 +247,6 @@ header {
     max-width: 600px;
 }
 
-/* Badge "Lycéen" */
 .badge {
     display: inline-flex;
     align-items: center;
@@ -373,9 +361,7 @@ header {
     opacity: 0.9;
 }
 
-/* ========================================================= */
-/* === 5. PAGE CHRONOLOGIE (TIMELINE) === */
-/* ========================================================= */
+/* = 5. PAGE CHRONOLOGIE (TIMELINE) = */
 
 .timeline {
     position: relative;
@@ -493,9 +479,7 @@ header {
     line-height: 1.5;
 }
 
-/* ========================================================= */
-/* === 6. PAGE PROJETS (GRILLE & CARTES) === */
-/* ========================================================= */
+/* = 6. PAGE PROJETS (GRILLE & CARTES) = */
 /* Utilisé dans projets.html et turtel.html */
 
 .projets-grid {
@@ -600,9 +584,7 @@ header {
     text-decoration: underline;
 }
 
-/* ========================================================= */
-/* === 7. DÉTAIL PROJET (Microbit, Turtel, Sucette) === */
-/* ========================================================= */
+/* = 7. DÉTAIL PROJET (Microbit, Turtel, Sucette) = */
 
 .project-hero {
     position: relative;
@@ -768,19 +750,18 @@ header {
     color: #ccc;
 }
 
-/* Bloc de code (Sucette.html) */
 .code-block {
     background-color: #1e1e1e; 
     color: #d4d4d4; 
     padding: 20px;
     border-radius: 8px;
     font-family: 'Courier New', monospace;
-    
-    /* 1. Force le bloc à ne jamais dépasser la largeur de son parent */
     max-width: 100%; 
     
-    /* 2. Ajoute une barre de défilement horizontale si le contenu déborde */
-    overflow-x: auto; 
+    /* MODIFICATIONS ICI */
+    white-space: pre-wrap;       /* Force le retour à la ligne automatique */
+    word-wrap: break-word;       /* Coupe les mots trop longs si nécessaire */
+    overflow-x: hidden;          /* Supprime la barre de défilement horizontale */
     
     border: 1px solid #333;
     margin-top: 1rem;
@@ -788,7 +769,6 @@ header {
     line-height: 1.5;
 }
 
-/* Sidebar (Détails à droite) */
 .project-sidebar {
     padding-top: 2rem;
 }
@@ -858,7 +838,6 @@ header {
     background-color: rgba(255,255,255,0.05);
 }
 
-/* iFrame (pour trinket.io dans Sucette.html) */
 iframe {
     width: 100%;
     border-radius: 8px;
@@ -867,9 +846,45 @@ iframe {
     background: #fff; /* Fallback si chargement lent */
 }
 
-/* ========================================================= */
-/* === 8. PAGE CONTACT === */
-/* ========================================================= */
+.code-header {
+    display: flex;
+    justify-content: space-between; /* Aligne le titre à gauche et le bouton à droite */
+    align-items: center;
+    margin-bottom: 0.5rem; /* Ajuste l'espace entre le header et le code */
+}
+
+.code-header .section-title {
+    margin-bottom: 0; /* Retire la marge inférieure par défaut du titre de section */
+}
+
+.copy-btn {
+    background-color: #333;
+    color: var(--text-main);
+    padding: 8px 15px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.copy-btn:hover {
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #000;
+}
+
+.copy-btn.copied {
+    background-color: #10b981; /* Vert pour indiquer que c'est copié */
+    border-color: #10b981;
+    color: #fff;
+}
+
+/* = 8. PAGE CONTACT = */
 
 .contact-grid-layout {
     display: flex;
@@ -986,9 +1001,7 @@ iframe {
     color: #fff;
 }
 
-/* ========================================================= */
-/* === 9. FOOTER === */
-/* ========================================================= */
+/* = 9. FOOTER = */
 
 footer {
     text-align: center;
@@ -1000,11 +1013,9 @@ footer {
     width: 100%;
 }
 
-/* ========================================================= */
-/* === 10. RESPONSIVE (MOBILE) === */
-/* ========================================================= */
+/* = 10. RESPONSIVE (MOBILE) = */
 
-@media (max-width: 1100px) {
+@media (max-width: 950px) {
     /* Header & Nav */
     .desktop-nav {
         display: none;
@@ -1038,11 +1049,11 @@ footer {
         width: 100%;
     }
     .glow-effect {
-        width: 300px;  /* Réduit de 500px à 300px */
-        height: 300px; /* Réduit de 500px à 300px */
-        left: 50%;     /* Centre la lueur */
+        width: 300px;
+        height: 300px;
+        left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%); /* Assure le centrage parfait */
+        transform: translate(-50%, -50%);
     }
     .image-card {
         width: 100%;
@@ -1058,7 +1069,7 @@ footer {
         width: 100%;
         padding-left: 70px;
         padding-right: 25px;
-        text-align: left !important;
+        text-align: left;
     }
     .timeline-item.right {
         left: 0%;
@@ -1069,20 +1080,19 @@ footer {
         right: auto;
     }
 
-    /* Désactiver l'effet de survol (hover) des éléments de la timeline sur mobile */
     .timeline-content {
-        transform: none !important; /* Annule le translateY(-5px) au survol/tap */
-        border-color: #333 !important; /* Annule la bordure accent-cyan au survol/tap */
+        transform: none; 
+        border-color: #333;
     }
 
-.timeline-content:hover {
+    .timeline-content:hover {
         transform: none;
-        border-color: #333; /* Rétablir la couleur de bordure par défaut */
+        border-color: #333;
     }
     
     .timeline-content {
-        transform: none !important;
-        border-color: #333 !important;
+        transform: none;
+        border-color: #333;
     }
 
     .image-card:hover {
@@ -1104,7 +1114,7 @@ footer {
         gap: 2rem;
     }
     .project-sidebar {
-        order: 2; /* Sidebar en dessous du contenu principal */
+        order: 2;
     }
     .project-hero {
         height: auto;
@@ -1124,52 +1134,8 @@ footer {
         width: 100%;
         padding: 1.5rem;
     }
-}
-
-/* --- NOUVEAU STYLE POUR BOUTON COPIER ET LAYOUT DE CODE --- */
-
-.code-header {
-    display: flex;
-    justify-content: space-between; /* Aligne le titre à gauche et le bouton à droite */
-    align-items: center;
-    margin-bottom: 0.5rem; /* Ajuste l'espace entre le header et le code */
-}
-
-.code-header .section-title {
-    margin-bottom: 0; /* Retire la marge inférieure par défaut du titre de section */
-}
-
-.copy-btn {
-    background-color: #333;
-    color: var(--text-main);
-    padding: 8px 15px;
-    border: 1px solid #444;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.copy-btn:hover {
-    background-color: var(--accent-blue);
-    border-color: var(--accent-blue);
-    color: #000;
-}
-
-.copy-btn.copied {
-    background-color: #10b981; /* Vert pour indiquer que c'est copié */
-    border-color: #10b981;
-    color: #fff;
-}
-
-/* Ajustement pour les petits écrans */
-@media (max-width: 600px) {
     .code-header {
-        flex-direction: column; /* Empile le titre et le bouton */
+        flex-direction: column;
         align-items: flex-start;
         gap: 10px;
     }
