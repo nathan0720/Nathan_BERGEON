@@ -58,7 +58,7 @@
             <div class="project-section">
                 <h2 class="section-title">À propos du projet</h2>
                 <p>
-                    Lors de ma terminale au lycée, j’ai eu l’opportunité de réaliser un projet en NSI autour de la robotique en utilisant la carte Micro:bit et le robot Maqueen. Ce projet m’a permis de découvrir l’électronique, la programmation et la logique de contrôle des robots de manière ludique et pédagogique. L’objectif était de programmer des robots pour qu’ils effectuent des tâches simples mais concrètes, en utilisant différents capteurs intégrés.
+                    Lors de ma terminale au lycée, j’ai eu l’opportunité de réaliser un projet en NSI autour de la robotique en utilisant la carte Microbit et le robot Maqueen. Ce projet m’a permis de découvrir l’électronique, la programmation et la logique de contrôle des robots de manière ludique et pédagogique. L’objectif était de programmer des robots pour qu’ils effectuent des tâches simples mais concrètes, en utilisant différents capteurs intégrés.
                 </p>
                 <p>
                     
@@ -75,67 +75,6 @@
                 <p>Projet 3 - Le robot se déplace de façon autonome dans la classe</p>
             </div>
             <br>
-
-            <div class="project-section">
-                <div class="code-header">
-                    <h2 class="section-title">Le Code Python</h2>
-                    <button id="copyCodeButton" class="copy-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                        Copier
-                    </button>
-                </div>
-                <pre id="pythonCode" class="code-block">
-from microbit import *
-
-""" Maqueen robot """
-
-# 0x10 = hexadécimal adresse communication robot
-# protocole I2c
-def avance():
-    # moteur gauche avance
-    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
-    # moteur droit avance
-    i2c.write(0x10, bytearray([0x02, 0x0, 100]))
-
-def recule():
-    # moteur gauche recule
-    i2c.write(0x10, bytearray([0x00, 0x1, 100]))
-    # moteur droit recule
-    i2c.write(0x10, bytearray([0x02, 0x1, 100]))
-
-def gauche():
-    # moteur gauche stop
-    i2c.write(0x10, bytearray([0x00, 0x0, 0]))
-    # moteur droit avance
-    i2c.write(0x10, bytearray([0x02, 0x0, 100]))
-
-def droite():
-    # moteur gauche avance
-    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
-    # moteur droit stop
-    i2c.write(0x10, bytearray([0x02, 0x0, 0]))
-
-def stop():
-    # moteur gauche stop
-    i2c.write(0x10, bytearray([0x00, 0, 0]))
-    # moteur droit stop
-    i2c.write(0x10, bytearray([0x02, 0, 0]))
-
-def demitour():
-    # moteur gauche avance
-    i2c.write(0x10, bytearray([0x00, 0x0, 100]))
-    # moteur droit recule
-    i2c.write(0x10, bytearray([0x02, 0x1, 100]))
-    
-#pour arrive sur la ligne
-avance()
-sleep(750)
-
-    </pre>
-    <iframe width='100%' height='500' allowfullscreen frameborder='0' style='border:1px #d6d6d6 solid;' allow="fullscreen *; microphone *; camera *; serial *; usb *; encrypted-media *" src="https://fr.vittascience.com/microbit/?link=6923483141060&mode=simuOnly"></iframe>
-
-</div>
-
             <div class="project-section">
                 <h2 class="section-title">Documentations</h2>
                 <div class="features-grid">
@@ -245,7 +184,6 @@ sleep(750)
                 <h4><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg> Technologies</h4>
                 <div class="tech-tags">
                     <span class="tech-tag">Python</span>
-                    <span class="tag">#Micro:bit</span>
                 </div>
             </div>
 
@@ -259,7 +197,15 @@ sleep(750)
                     <a href="https://fr.vittascience.com/microbit/?link=6923483141060&mode=codeOnly&simu=1" target="_blank" class="sidebar-btn">
                         Voir le projet 1
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                    </a>                  
+                    </a>                    
+                    <a href="https://fr.vittascience.com/microbit/?link=690f52ab03c15&mode=codeOnly&console=bottom&toolbox=vittascience&simu=1" target="_blank" class="sidebar-btn">
+                        Voir le projet 2
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>                    
+                    <a href="https://fr.vittascience.com/microbit/?link=692340fa36580&mode=codeOnly&simu=1" target="_blank" class="sidebar-btn">
+                        Voir le projet 3
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    </a>                    
                     <a href="Projets/Microbit.zip" 
                         download 
                         class="sidebar-btn secondary">
