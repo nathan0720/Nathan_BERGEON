@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Déroulant Avancé - Nathan Bergeon</title>
+    <title>Projets Python Micro:bit - Nathan Bergeon</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,9 +60,6 @@
                 <p>
                     Lors de ma terminale au lycée, j’ai eu l’opportunité de réaliser un projet en NSI autour de la robotique en utilisant la carte Micro:bit et le robot Maqueen. Ce projet m’a permis de découvrir l’électronique, la programmation et la logique de contrôle des robots de manière ludique et pédagogique. L’objectif était de programmer des robots pour qu’ils effectuent des tâches simples mais concrètes, en utilisant différents capteurs intégrés.
                 </p>
-                <p>
-                    
-                </p>
             </div>
 
             <div class="challenge-box">
@@ -78,13 +75,13 @@
 
             <div class="project-section">
                 <div class="code-header">
-                    <h2 class="section-title">Le Code Python</h2>
-                    <button id="copyCodeButton" class="copy-btn">
+                    <h2 class="section-title">Projet 1 - Le robot suit une ligne noire</h2>
+                    <button class="copy-btn" data-target="code-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         Copier
                     </button>
                 </div>
-                <pre id="pythonCode" class="code-block">
+                <pre id="code-1" class="code-block">
 from microbit import *
 
 """ Maqueen robot """
@@ -126,15 +123,313 @@ def demitour():
     i2c.write(0x10, bytearray([0x00, 0x0, 100]))
     # moteur droit recule
     i2c.write(0x10, bytearray([0x02, 0x1, 100]))
-    
-#pour arrive sur la ligne
+   
+# On commence à avancer
 avance()
-sleep(750)
 
-    </pre>
-    <iframe width='100%' height='500' allowfullscreen frameborder='0' style='border:1px #d6d6d6 solid;' allow="fullscreen *; microphone *; camera *; serial *; usb *; encrypted-media *" src="https://fr.vittascience.com/microbit/?link=6923483141060&mode=simuOnly"></iframe>
+# On attend que l'un des deux capteurs détecte du noir (valeur 0)
+# Tant que le capteur gauche ET le capteur droit voient du blanc (1), on ne fait rien
+while pin13.read_digital() == 1 and pin14.read_digital() == 1:
+    sleep(10) # Petite pause pour laisser le processeur respirer
 
-</div>
+# Une fois qu'on a détecté du noir, on entre dans la boucle principale
+while True:
+    # Votre logique de suivi de ligne habituelle
+    pin8.write_digital(pin13.read_digital())
+    pin12.write_digital(pin14.read_digital())
+    
+    if pin14.read_digital() == 1 and pin13.read_digital() == 1:
+        demitour()
+    elif pin14.read_digital() == 0 and pin13.read_digital() == 1:
+        droite()
+    elif pin14.read_digital() == 1 and pin13.read_digital() == 0:
+        gauche()
+    else:
+        avance()
+</pre>
+<br>
+                <p>
+                    Lancer le simulateur avec le bouton run <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-play-icon lucide-play"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg>
+                </p>
+                
+                <iframe width='100%' height=1520 allowfullscreen frameborder='0' style='border:1px #d6d6d6 solid;' allow="fullscreen *; microphone *; camera *; serial *; usb *; encrypted-media *" src="https://fr.vittascience.com/microbit/?link=6923483141060&mode=codeOnly"></iframe>
+
+            </div>
+
+            <div class="project-section">
+                <div class="code-header">
+                    <h2 class="section-title">Projet 2 - Le robot détecte les obstacles</h2>
+                    <button class="copy-btn" data-target="code-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                <pre id="code-2" class="code-block">
+from microbit import *
+import machine
+from neopixel import NeoPixel
+
+# MOTEURS
+def moteur_gauche(sens, vitesse):
+    i2c.write(0x10, bytearray([0x00, sens, vitesse]))
+
+def moteur_droite(sens, vitesse):
+    i2c.write(0x10, bytearray([0x02, sens, vitesse]))
+
+def avance():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 100)
+
+def stop():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 0)
+
+# DISTANCE
+
+def distance()->float:
+    pin1.write_digital(1)
+    pin1.write_digital(0)
+    pin2.read_digital()
+    delai = machine.time_pulse_us(pin2, 1)
+    return delai * 34 / 2000
+
+# LEDs
+
+np = NeoPixel(pin15, 4)
+
+def set_leds(color):
+    for i in range(4):
+        np[i] = color
+    np.show()
+
+# PARAMÈTRES
+
+seuil = 30  # distance seuil
+
+# BOUCLE PRINCIPALE
+
+while True:
+    dist = distance()
+
+    if 0 < dist < seuil:
+        # Obstacle détecté → stop + LEDs rouges
+        stop()
+        set_leds((255, 0, 0))
+    else:
+        # Pas d'obstacle → avance + LEDs blanches
+        avance()
+        set_leds((255, 255, 255))
+
+    sleep(50)
+                </pre>
+            </div>
+
+            <div class="project-section">
+                <div class="code-header">
+                    <h2 class="section-title">Projet 3 - Le robot se déplace de façon autonome dans la classe</h2>
+                    <button class="copy-btn" data-target="code-3-robot">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                <p>Carte Robot</p>
+                <pre id="code-3-robot" class="code-block">
+from microbit import *
+import machine
+import time
+from neopixel import NeoPixel
+import radio
+
+# MOTEURS
+
+def moteur_gauche(sens, vitesse):
+    i2c.write(0x10, bytearray([0x00, sens, vitesse]))
+
+def moteur_droite(sens, vitesse):
+    i2c.write(0x10, bytearray([0x02, sens, vitesse]))
+
+def avance():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 100)
+
+def recule():
+    moteur_gauche(1, 100)
+    moteur_droite(1, 100)
+
+def gauche():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 100)
+
+def droite():
+    moteur_gauche(0, 100)
+    moteur_droite(0, 0)
+
+def stop():
+    moteur_gauche(0, 0)
+    moteur_droite(0, 0)
+
+
+# DISTANCE
+
+def distance()->float:
+    pin1.write_digital(1)
+    pin1.write_digital(0)
+    pin2.read_digital()
+    delai = machine.time_pulse_us(pin2, 1)
+    return delai * 34 / 2000
+
+
+# LEDS
+
+def set_leds(color):
+    for i in range(4):
+        np[i] = color
+    np.show()
+
+
+# OBSTACLE
+
+def obstacle():
+    stop()
+    sleep(100)
+    recule()
+    sleep(300)
+    stop()
+    sleep(100)
+    droite()
+    sleep(400)
+    stop()
+    sleep(100)
+
+
+# INITIALISATION
+
+radio.on()
+radio.config(channel=12)
+
+np = NeoPixel(pin15, 4)
+seuil = 30
+auto = True  # mode AUTO au démarrage
+
+r = 0
+v = 255
+
+
+# MODE AUTOMATIQUE
+
+def mode_auto():
+    global auto, r, v
+
+    dist = distance()
+
+    if 0 < dist < seuil:
+
+        bloque = True
+
+        for essai in range(5):
+
+            # LEDs : dégradé vert->rouge
+            set_leds((r, v, 0))
+
+            r = min(255, r + 50)
+            v = max(0, v - 50)
+
+            if distance() >= seuil:
+                bloque = False
+                break
+
+            obstacle()
+
+        if bloque:
+            auto = False
+            stop()
+
+    else:
+        # avance normale
+        r, v = 0, 255
+        avance()
+        set_leds((255, 255, 255))
+        sleep(20)
+
+
+# MODE MANUEL
+
+def mode_manuel():
+    msg = radio.receive()
+
+    # LEDs rouges
+    set_leds((255, 0, 0))
+
+    if msg == "AV":
+        avance()
+    elif msg == "RE":
+        recule()
+    elif msg == "GA":
+        gauche()
+    elif msg == "DR":
+        droite()
+    elif msg == "ST":
+        stop()
+
+
+#   BOUCLE PRINCIPALE
+
+while True:
+    if auto:
+        mode_auto()
+    else:
+        mode_manuel()
+</pre>
+
+<br>
+            <div class="project-section">
+                <div class="code-header">
+                    <p>Carte Télécomande</p>
+                <button class="copy-btn" data-target="code-3-remote">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copier
+                    </button>
+                </div>
+                
+                <pre id="code-3-remote" class="code-block">
+module radio
+
+from microbit import *
+import radio
+
+radio.on()
+radio.config(channel=12)
+
+while True:
+    msg = None
+
+    #COMMANDES PAR BOUTONS
+    if button_a.is_pressed() and button_b.is_pressed():
+        msg = "ST"  # stop
+    elif button_a.is_pressed():
+        msg = "GA"  # gauche
+    elif button_b.is_pressed():
+        msg = "DR"  # droite
+
+    # AVANCER / RECULER AVEC INCLINAISON
+    else:
+        y = accelerometer.get_y()
+
+        if y < -200:
+            msg = "AV"
+        elif y > 200:
+            msg = "RE"
+        else:
+            msg = "ST"
+
+    if msg:
+        radio.send(msg)
+
+    sleep(100)
+</pre>
+            </div>
+
+
 
             <div class="project-section">
                 <h2 class="section-title">Documentations</h2>
