@@ -1055,7 +1055,7 @@ footer {
 
 /* = 10. RESPONSIVE (MOBILE) = */
 
-@media (max-width: 950px) {
+@media (max-width: 800px) {
     .desktop-nav {
         display: none;
     }

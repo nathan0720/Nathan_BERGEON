@@ -58,8 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function type() {
-        // Sécurité : si on passe sous 950px pendant que l'animation tourne, on stoppe tout
-        if (window.innerWidth <= 950) {
+        if (window.innerWidth <= 800) {
             animationStarted = false;
             return;
         }
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fonction qui décide quoi faire selon la taille de l'écran
     function checkScreenAndAnimate() {
-        if (window.innerWidth <= 950) {
+        if (window.innerWidth <= 800) {
             // MODE MOBILE : On coupe l'animation
             clearTimeout(animationTimeout);
             textElement.textContent = phrases[0]; // On affiche le texte fixe
