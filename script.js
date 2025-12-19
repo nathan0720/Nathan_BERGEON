@@ -44,3 +44,55 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const textElement = document.getElementById('typewriter-dynamic');
+    const cursor = document.getElementById('cursor');
+    
+    const phrases = ["une ligne à la fois."]; // Tu peux mettre plusieurs phrases
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+
+    // Animation du curseur avec GSAP
+    gsap.to(cursor, {
+        opacity: 0,
+        ease: "power2.inOut",
+        repeat: -1,
+        yoyo: true,
+        duration: 0.5
+    });
+
+    function type() {
+        const currentPhrase = phrases[phraseIndex];
+
+        if (isDeleting) {
+            // On efface
+            textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 50; // Plus rapide quand on efface
+        } else {
+            // On écrit
+            textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 100;
+        }
+
+        // Gestion des pauses et changements de phrase
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            isDeleting = true;
+            typingSpeed = 2000; // Pause à la fin de la phrase
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            typingSpeed = 500; // Pause avant de recommencer
+        }
+
+        setTimeout(type, typingSpeed);
+    }
+
+    // Lancer l'animation
+    setTimeout(type, 1000); 
+});

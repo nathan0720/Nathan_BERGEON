@@ -29,11 +29,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 html, body {
     width: 100%;
     overflow-x: hidden; /* Force la coupure horizontale */
     position: relative; /* Aide à stabiliser le viewport sur mobile */
 }
+
 body {
     background-color: var(--bg-body);
     color: var(--text-main);
@@ -61,6 +63,7 @@ a.lien {
     font-weight: 10;
     text-underline-offset: 1px;
 }
+
 a.lien:hover {
     color: var(--text-main);
 }
@@ -218,6 +221,7 @@ header {
     color: var(--text-main);
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
+
 .btn-secondary:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
@@ -244,7 +248,11 @@ header {
 
 .hero-content {
     flex: 1;
-    max-width: 600px;
+    max-width: 600px; /* */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .badge {
@@ -275,6 +283,21 @@ header {
     font-weight: 800;
     margin-bottom: 1.5rem;
     letter-spacing: -2px;
+    text-align: left;
+}
+
+/* --- Styles pour l'animation Typewriter (Stabilité) --- */
+
+/* Le conteneur qui empêche le texte du bas de sauter */
+.fixed-height-container {
+    display: block;        /* Force le passage sous "Créer mon avenir" */
+    
+    /* Calcul : line-height 1.05 * 2 lignes = 2.1em. On met 2.3em par sécurité. */
+    min-height: 2.3em;     
+    
+    margin-top: 0.5rem;    /* Un peu d'espace avec le titre du dessus */
+    white-space: normal;   /* Autorise le retour à la ligne */
+    overflow: visible;     /* S'assure que rien n'est coupé */
 }
 
 .gradient-text {
@@ -282,15 +305,25 @@ header {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    display: block;
+    display: inline; /* Inline pour coller au curseur */
 }
 
+#cursor {
+    color: var(--accent-cyan);
+    margin-left: 5px;
+    font-weight: 400;
+}
+
+/* --- Fin styles Typewriter --- */
+
 .description {
-    color: var(--text-muted);
+    color: var(--text-muted); 
     font-size: 1.15rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem;      
     max-width: 520px;
     line-height: 1.7;
+    text-align: left;
+    margin-left: 0;
 }
 
 .author-name {
@@ -301,6 +334,7 @@ header {
 .cta-group {
     display: flex;
     gap: 1.5rem;
+    justify-content: flex-start;
 }
 
 /* Image Hero avec effet Glow */
@@ -333,7 +367,7 @@ header {
     border-radius: 50px;
     overflow: hidden;
     z-index: 1;
-    background-image: url("images/pp2.jpg"); /* Assure-toi que le chemin est bon */
+    background-image: url("images/pp2.jpg");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -480,7 +514,6 @@ header {
 }
 
 /* = 6. PAGE PROJETS (GRILLE & CARTES) = */
-/* Utilisé dans projets.html et turtel.html */
 
 .projets-grid {
     display: grid;
@@ -578,6 +611,7 @@ header {
     font-weight: 600;
     color: var(--text-main);
 }
+
 .action-link:hover {
     color: var(--accent-blue);
     text-decoration: underline;
@@ -594,7 +628,6 @@ header {
     display: flex;
     align-items: flex-end;
     padding-bottom: 4rem;
-    /* Remonte sous le header */
     margin-top: calc(-1 * var(--header-height));
 }
 
@@ -620,6 +653,7 @@ header {
     margin-bottom: 1.5rem;
     font-weight: 500;
 }
+
 .back-link:hover {
     color: var(--text-main);
 }
@@ -646,10 +680,12 @@ header {
     font-weight: 600;
     text-transform: uppercase;
 }
+
 .meta-badge.type {
     background-color: #164e63;
     color: var(--accent-cyan);
 }
+
 .meta-badge.date {
     border: 1px solid #333;
     color: #ccc;
@@ -679,6 +715,7 @@ header {
     align-items: center;
     gap: 12px;
 }
+
 .section-title::before {
     content: '';
     width: 24px;
@@ -823,6 +860,7 @@ header {
     transition: all 0.3s ease;
     border: 1px solid #333;
 }
+
 .sidebar-btn:hover {
     background-color: #333;
     border-color: #444;
@@ -832,10 +870,12 @@ header {
     background-color: transparent;
     color: #ccc;
 }
+
 .sidebar-btn.secondary:hover {
     color: var(--text-main);
     background-color: rgba(255,255,255,0.05);
 }
+
 .sidebar-btn svg {
     flex-shrink: 0;
     min-width: 16px;
@@ -851,13 +891,13 @@ iframe {
 
 .code-header {
     display: flex;
-    justify-content: space-between; /* Aligne le titre à gauche et le bouton à droite */
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem; /* Ajuste l'espace entre le header et le code */
+    margin-bottom: 0.5rem;
 }
 
 .code-header .section-title {
-    margin-bottom: 0; /* Retire la marge inférieure par défaut du titre de section */
+    margin-bottom: 0;
 }
 
 .copy-btn {
@@ -947,6 +987,7 @@ iframe {
     color: var(--text-main);
     font-weight: 500;
 }
+
 .info-value a:hover {
     color: var(--accent-blue);
 }
@@ -999,6 +1040,7 @@ iframe {
     cursor: pointer;
     transition: background 0.3s;
 }
+
 .submit-btn:hover {
     background: #295387;
     color: #fff;
@@ -1036,14 +1078,26 @@ footer {
     }
     .hero-content {
         align-items: center;
-        width: 100%;
+        text-align: center;
     }
     .hero h1 { 
         font-size: 2.8rem;
     } 
-    .cta-group { 
+    
+    /* Adaptation de la hauteur fixe sur mobile */
+    .fixed-height-container {
+        /* On garde la même logique de 2 lignes environ, l'unité 'em' s'adapte à la font-size */
+        min-height: 2.3em;
+    }
+
+    .description {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-group {
         justify-content: center;
-        flex-wrap: wrap;
     }
     .hero-image {
         padding-right: 0;
@@ -1144,7 +1198,6 @@ footer {
         font-size: 0.75rem !important;
         padding: 15px;
     }
-    
 }
 
 @media (max-width: 550px) {

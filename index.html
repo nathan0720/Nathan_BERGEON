@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 <body>
 
@@ -45,8 +46,10 @@
                 </div>
 
                 <h1>
-                    Créer mon avenir<br>
-                    <span class="gradient-text">une ligne à la fois.</span>
+                    <span id="typewriter-static">Créer mon avenir</span>
+                    <div class="fixed-height-container">
+                        <span id="typewriter-dynamic" class="gradient-text"></span><span id="cursor">|</span>
+                    </div>
                 </h1>
 
                 <p class="description">
