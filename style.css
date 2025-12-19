@@ -813,6 +813,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     background-color: #222;
     color: var(--text-main);
     padding: 12px 16px;
@@ -834,6 +835,10 @@ header {
 .sidebar-btn.secondary:hover {
     color: var(--text-main);
     background-color: rgba(255,255,255,0.05);
+}
+.sidebar-btn svg {
+    flex-shrink: 0;
+    min-width: 16px;
 }
 
 iframe {
