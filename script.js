@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// --- Logique de la machine à écrire réactive ---
+//  Logique de la machine à écrire réactive 
 document.addEventListener('DOMContentLoaded', () => {
     const textElement = document.getElementById('typewriter-dynamic');
     const cursor = document.getElementById('cursor');
@@ -86,16 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
         animationTimeout = setTimeout(type, typingSpeed);
     }
 
-    // Fonction qui décide quoi faire selon la taille de l'écran
     function checkScreenAndAnimate() {
         if (window.innerWidth <= 800) {
-            // MODE MOBILE : On coupe l'animation
             clearTimeout(animationTimeout);
-            textElement.textContent = phrases[0]; // On affiche le texte fixe
-            cursor.style.display = 'none'; // On cache le curseur
+            textElement.textContent = phrases[0];
+            cursor.style.display = 'none';
             animationStarted = false;
         } else {
-            // MODE PC : On lance l'animation si elle n'est pas déjà lancée
             cursor.style.display = 'inline-block';
             if (!animationStarted) {
                 charIndex = 0;
@@ -107,9 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Écouteur de redimensionnement de fenêtre
     window.addEventListener('resize', checkScreenAndAnimate);
 
-    // Lancement au démarrage
     checkScreenAndAnimate();
 });
