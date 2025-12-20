@@ -34,11 +34,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-//  Logique de la machine à écrire réactive 
+//  Logique de la machine à écrire 
 document.addEventListener('DOMContentLoaded', () => {
     const textElement = document.getElementById('typewriter-dynamic');
     const cursor = document.getElementById('cursor');
     
+    if (!textElement || !cursor) {
+        return;
+    }
+
     const phrases = ["une ligne à la fois."];
     let phraseIndex = 0;
     let charIndex = 0;
@@ -55,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
         yoyo: true,
         duration: 0.5
     });
-
     function type() {
         if (window.innerWidth <= 800) {
             animationStarted = false;
