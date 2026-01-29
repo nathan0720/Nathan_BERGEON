@@ -1,70 +1,69 @@
 /* = CONFIGURATION = */
 const DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1465838008958980128/BYgFcckr5DD_TnGw3nSRC-C5P0h9qfulOZ5lX_msCKTrLvbckof1lFq51lQNNNSZyse7"; 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyuQDx7FGROb-UsolVpdw4obYaTFk-Y6UP87Z9sfNfDVyWMAVgegpzB8sMk2GqQwQ3g/exec"; 
 
 /* = ICONES SVG = */
 const ICONS = {
     defaut: `<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`,
     Ecole: `<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>`,
     Entreprise: `<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`,
-    Curieux: `<svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>` // Main (Hand Wave)
+    Curieux: `<svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0"/><path d="M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>`
 };
 
 /* = LOGIQUE PRINCIPALE = */
 document.addEventListener('DOMContentLoaded', () => {
 
-    /* --- 1. GESTION DU PROFIL & ANALYTICS --- */
+    /* --- 1. GESTION DU PROFIL & UI --- */
     const profileTrigger = document.getElementById('profileTrigger');
     const modal = document.getElementById('profile-modal');
-    const closeXBtn = document.getElementById('close-modal-x'); // Croix
-    const saveBtn = document.getElementById('save-profile-btn'); // Bouton Enregistrer
+    const closeXBtn = document.getElementById('close-modal-x'); 
+    const saveBtn = document.getElementById('save-profile-btn'); 
     const cards = document.querySelectorAll('.profile-card');
     const nameInput = document.getElementById('user-name-input');
     
     const storageKey = 'nathan_portfolio_user';
-    
-    // Variables temporaires pour le choix en cours
     let selectedType = null;
     let savedUser = JSON.parse(localStorage.getItem(storageKey));
 
-    // Mettre à jour l'icône dans le header
+    // Mise à jour de l'icône Header
     function updateHeaderIcon(type) {
         if(profileTrigger) {
             profileTrigger.innerHTML = ICONS[type] || ICONS['defaut'];
-            // Si icône par défaut ou pas de type, pulse animation
             if(!type || type === 'defaut') profileTrigger.classList.add('needs-setup');
             else profileTrigger.classList.remove('needs-setup');
         }
     }
 
-    // Gestion Ouverture/Fermeture
-    function openModal() { modal.style.display = 'flex'; }
-    function closeModal() { modal.style.display = 'none'; }
+    // Gestion Modal
+    function openModal() { if(modal) modal.style.display = 'flex'; }
+    function closeModal() { if(modal) modal.style.display = 'none'; }
 
-    // Init
+    // INIT : Vérification au chargement de la page
     if (savedUser) {
         updateHeaderIcon(savedUser.type);
-        selectedType = savedUser.type; // Pré-sélection
-        sendAnalytics(savedUser, "Visite (Retour)");
+        selectedType = savedUser.type; 
+        // Envoi notification Visite (Retour)
+        sendDiscordEmbed("Visite (Retour)", "L'utilisateur revient sur le site.", savedUser, 0x3498db); // Bleu
     } else {
         updateHeaderIcon('defaut');
-        setTimeout(openModal, 3000); // Auto-open
-        sendAnalytics({name: "Inconnu", type: "Non défini"}, "Nouvelle Visite");
+        setTimeout(openModal, 3000); 
+        // Envoi notification Nouvelle Visite (Anonyme pour l'instant)
+        sendDiscordEmbed("Nouvelle Visite", "Un visiteur non identifié parcourt le site.", {name: "Inconnu", type: "Non défini"}, 0x95a5a6); // Gris
     }
 
-    // Ouvrir le modal au clic sur l'icône
-    profileTrigger.addEventListener('click', () => {
-        openModal();
-        if(savedUser) {
-            nameInput.value = savedUser.name || "";
-            // Surligner la carte déjà choisie
-            cards.forEach(c => c.classList.remove('selected'));
-            const currentCard = document.querySelector(`.profile-card[data-type="${savedUser.type}"]`);
-            if(currentCard) currentCard.classList.add('selected');
-        }
-    });
+    // Click trigger Header
+    if(profileTrigger) {
+        profileTrigger.addEventListener('click', () => {
+            openModal();
+            if(savedUser) {
+                if(nameInput) nameInput.value = savedUser.name || "";
+                cards.forEach(c => c.classList.remove('selected'));
+                const currentCard = document.querySelector(`.profile-card[data-type="${savedUser.type}"]`);
+                if(currentCard) currentCard.classList.add('selected');
+            }
+        });
+    }
 
-    // 1. Choix d'une carte (juste visuel pour l'instant)
+    // Sélection des cartes
     cards.forEach(card => {
         card.addEventListener('click', () => {
             cards.forEach(c => c.classList.remove('selected'));
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Bouton ENREGISTRER (Action finale)
+    // Sauvegarde Profil
     if(saveBtn) {
         saveBtn.addEventListener('click', () => {
             if(!selectedType) {
@@ -81,86 +80,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             const name = nameInput.value.trim() || "Anonyme";
-            
-            // Sauvegarde
             savedUser = { name: name, type: selectedType, lastVisit: new Date().toISOString() };
             localStorage.setItem(storageKey, JSON.stringify(savedUser));
 
-            // UI Updates
             updateHeaderIcon(selectedType);
             closeModal();
 
-            // Notif
-            sendAnalytics(savedUser, "Profil Mis à jour");
+            // Notification Profil Mis à jour
+            sendDiscordEmbed("Profil Mis à jour", "L'utilisateur s'est identifié.", savedUser, 0x2ecc71); // Vert
         });
     }
 
-    // 3. Bouton CROIX (Fermer sans sauver + Pulse)
+    // Fermeture Modal
     if(closeXBtn) {
         closeXBtn.addEventListener('click', () => {
             closeModal();
-            // Si pas d'utilisateur sauvé, on fait clignoter l'icone pour dire "eh oh config moi"
-            if(!savedUser) profileTrigger.classList.add('needs-setup');
+            if(!savedUser && profileTrigger) profileTrigger.classList.add('needs-setup');
+        });
+    }
+    if(modal) {
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                closeModal();
+                if(!savedUser && profileTrigger) profileTrigger.classList.add('needs-setup');
+            }
         });
     }
 
-    // Fermer en cliquant en dehors
-    modal.addEventListener('click', (e) => {
-        if(e.target === modal) {
-            closeModal();
-            if(!savedUser) profileTrigger.classList.add('needs-setup');
-        }
-    });
-
-    /* --- 2. FONCTIONS D'ENVOI (Analytics) --- */
-    function sendAnalytics(user, action) {
-        const currentPage = window.location.pathname.split("/").pop() || "index.html";
-        const data = {
-            name: user.name,
-            type: user.type,
-            page: currentPage,
-            action: action,
-            userAgent: navigator.userAgent
-        };
-        // Google Sheets
-        // Dans la fonction sendAnalytics...
-
-        // Google Sheets
-        if(GOOGLE_SCRIPT_URL.includes("script.google.com")) {
-            // On utilise 'application/x-www-form-urlencoded' ou 'text/plain' pour passer le no-cors plus facilement
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST", 
-                mode: "no-cors", 
-                headers: { 
-                    "Content-Type": "text/plain;charset=utf-8" 
-                },
-                body: JSON.stringify(data)
-            }).then(() => {
-                console.log("Données envoyées à Google Sheets");
-            }).catch(e => console.error("Erreur Sheets", e));
-        }
-        // Discord
-        if(DISCORD_WEBHOOK_URL.includes("discord")) {
-            const discordMsg = { content: `📊 **${action}**\n👤 **${user.name}** (${user.type})\n📍 ${currentPage}` };
-            fetch(DISCORD_WEBHOOK_URL, {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(discordMsg)
-            }).catch(e => console.error("Erreur Discord", e));
-        }
-    }
-
-    /* --- 3. MACHINE A ECRIRE (Restaurée) --- */
+    /* --- 2. MACHINE A ECRIRE --- */
     const textElement = document.getElementById('typewriter-dynamic');
     const cursor = document.getElementById('cursor');
     
     if (textElement && cursor) {
         const phrases = ["une ligne à la fois."];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let typingSpeed = 100;
-        let animationStarted = false;
-        let animationTimeout;
+        let phraseIndex = 0, charIndex = 0, isDeleting = false;
+        let animationStarted = false, animationTimeout;
 
         gsap.to(cursor, { opacity: 0, ease: "power2.inOut", repeat: -1, yoyo: true, duration: 0.5 });
 
@@ -170,18 +124,20 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (isDeleting) {
                 textElement.textContent = currentPhrase.substring(0, charIndex - 1);
-                charIndex--; typingSpeed = 50;
+                charIndex--; 
             } else {
                 textElement.textContent = currentPhrase.substring(0, charIndex + 1);
-                charIndex++; typingSpeed = 100;
+                charIndex++; 
             }
 
+            let typeSpeed = isDeleting ? 50 : 100;
+
             if (!isDeleting && charIndex === currentPhrase.length) {
-                isDeleting = true; typingSpeed = 2000;
+                isDeleting = true; typeSpeed = 2000;
             } else if (isDeleting && charIndex === 0) {
-                isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typingSpeed = 500;
+                isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
             }
-            animationTimeout = setTimeout(type, typingSpeed);
+            animationTimeout = setTimeout(type, typeSpeed);
         }
 
         function checkScreenAndAnimate() {
@@ -191,8 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 cursor.style.display = 'inline-block';
                 if (!animationStarted) {
-                    charIndex = 0; phraseIndex = 0; isDeleting = false;
-                    animationStarted = true; type();
+                    charIndex = 0; isDeleting = false; animationStarted = true; type();
                 }
             }
         }
@@ -200,36 +155,31 @@ document.addEventListener('DOMContentLoaded', () => {
         checkScreenAndAnimate();
     }
 
-    /* --- 4. COPIE EMAIL & LIEN --- */
+    /* --- 3. COPIE EMAIL & LIEN --- */
     const emailBtn = document.getElementById('copyEmail');
-    const emailMsg = document.getElementById('copyMessage');
     const shareBtn = document.getElementById('shareBtn');
-    const shareMsg = document.getElementById('shareMessage');
-    const myEmail = "nathan07.bergeon@gmail.com";
-
+    
     if (emailBtn) {
         emailBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(myEmail).then(() => {
-                emailMsg.classList.add('show');
-                setTimeout(() => emailMsg.classList.remove('show'), 2000);
-            });
+            navigator.clipboard.writeText("nathan07.bergeon@gmail.com").then(() => showTooltip('copyMessage'));
         });
     }
     if (shareBtn) {
         shareBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                shareMsg.classList.add('show');
-                setTimeout(() => shareMsg.classList.remove('show'), 2000);
-            });
+            navigator.clipboard.writeText(window.location.href).then(() => showTooltip('shareMessage'));
         });
     }
+    function showTooltip(id) {
+        const el = document.getElementById(id);
+        if(el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2000); }
+    }
     
-    /* --- 5. MENU MOBILE --- */
+    /* --- 4. MENU MOBILE --- */
     const menuCheckbox = document.getElementById('menuCheckbox');
     const mobileMenu = document.getElementById('mobileMenu');
     const header = document.querySelector('header');
     
-    if(menuCheckbox) {
+    if(menuCheckbox && mobileMenu) {
         menuCheckbox.addEventListener('change', () => {
             if(menuCheckbox.checked) {
                 mobileMenu.classList.add('open');
@@ -250,53 +200,46 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    /* --- 5. SUIVI CLICS PROJETS --- */
+    // Détecte les clics sur les boutons "Voir le projet"
+    document.addEventListener('click', (e) => {
+        const projectCard = e.target.closest('.project-card');
+        // On vérifie si on clique sur un lien ou un bouton dans une carte
+        if (projectCard && (e.target.closest('a') || e.target.tagName === 'BUTTON')) {
+            const projectName = projectCard.querySelector('h3') ? projectCard.querySelector('h3').innerText : "Projet Inconnu";
+            const currentUser = JSON.parse(localStorage.getItem(storageKey)) || {name: "Inconnu", type: "Non défini"};
+            
+            sendDiscordEmbed("Intérêt Projet", `A cliqué sur le projet : **${projectName}**`, currentUser, 0xe67e22); // Orange
+        }
+    });
+
 });
 
-/* --- 6. SUIVI DISCORD DES PAGES ET CLICS --- */
+/* = FONCTION ENVOI DISCORD (EMBED) = */
+function sendDiscordEmbed(title, description, user, colorInt) {
+    if(!DISCORD_WEBHOOK_URL.includes("discord")) return;
 
-// Fonction pour envoyer la notification de visite
-function sendDiscordVisitUpdate() {
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
     const pageTitle = document.title;
-    const pageUrl = window.location.href;
-    const userProfile = localStorage.getItem('userProfileType') || 'Non défini';
-    const userName = localStorage.getItem('userName') || 'Anonyme';
 
-    const data = {
-        embeds: [{
-            title: "👀 Nouvelle page consultée",
-            color: 0x3498db, 
-            fields: [
-                { name: "Page", value: pageTitle, inline: true },
-                { name: "Utilisateur", value: userName + " (" + userProfile + ")", inline: true },
-                { name: "Lien", value: pageUrl }
-            ],
-            timestamp: new Date()
-        }]
+    const embed = {
+        title: `📊 ${title}`,
+        description: description,
+        color: colorInt, // Code couleur décimal
+        fields: [
+            { name: "👤 Utilisateur", value: `**${user.name}**\n(${user.type})`, inline: true },
+            { name: "📍 Page Actuelle", value: `${pageTitle}\n*${currentPage}*`, inline: true }
+        ],
+        footer: {
+            text: "Portfolio Analytics • " + new Date().toLocaleTimeString('fr-FR'),
+            icon_url: "https://cdn-icons-png.flaticon.com/512/25/25231.png" // Icône GitHub style
+        }
     };
 
     fetch(DISCORD_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    }).catch(err => console.error("Erreur Discord:", err));
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ embeds: [embed] })
+    }).catch(e => console.error("Erreur Discord", e));
 }
-
-// Envoyer la notification dès que la page est chargée
-window.addEventListener('load', sendDiscordVisitUpdate);
-
-// Notifier quand on clique sur un projet (si on est sur la page projets)
-document.addEventListener('click', (e) => {
-    const projectCard = e.target.closest('.project-card');
-    if (projectCard) {
-        const projectName = projectCard.querySelector('h3').innerText;
-        const userName = localStorage.getItem('userName') || 'Anonyme';
-        
-        fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                content: `🚀 **${userName}** consulte le projet : **${projectName}**`
-            })
-        });
-    }
-});
