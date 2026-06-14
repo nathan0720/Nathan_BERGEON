@@ -243,3 +243,37 @@ function sendDiscordEmbed(title, description, user, colorInt) {
         body: JSON.stringify({ embeds: [embed] })
     }).catch(e => console.error("Erreur Discord", e));
 }
+
+
+// page chronologie popup
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // Récupérer les éléments du popup
+    const modal = document.getElementById('bulletinModal');
+    const closeBtn = document.querySelector('.close-btn');
+    
+    // Récupérer tous les liens "sensibles" (bulletins, etc.)
+    const restrictedLinks = document.querySelectorAll('.restricted-link');
+
+    // Quand on clique sur un lien restreint, ouvrir le popup
+    restrictedLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche d'ouvrir le dossier
+            modal.style.display = 'block';
+        });
+    });
+
+    // Quand on clique sur la croix (X), fermer le popup
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+
+    // Quand l'utilisateur clique en dehors de la boîte, fermer le popup
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
