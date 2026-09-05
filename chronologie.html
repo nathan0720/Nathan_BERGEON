@@ -61,9 +61,9 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-marked-icon lucide-book-marked"><path d="M10 2v8l3-3 3 3V2"/><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
                 </div>
                 <div class="timeline-content">
-                    <span class="date-badge-outline">2026 - FUTUR</span>
-                    <h3>Études Supérieures</h3>
-                    <h4>École d'Informatique / BTS ciel slam ...</h4>
+                    <span class="date-badge">2026 - 2031</span>
+                    <h3>Programme Grande École <a href="https://www.hetic.net/" target="_blank" class="lien">HETIC</a></h3>
+                    <h4>Management, Design et Technologies du Numérique</h4>
                 </div>
             </div>
             
@@ -80,7 +80,7 @@
                 <div class="timeline-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-graduation-cap-icon lucide-graduation-cap"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>                </div>
                 <div class="timeline-content">
-                    <span class="date-badge">2025 - 2026 Actuellement</span>
+                    <span class="date-badge-outline">2025 - 2026</span>
                     <h3>Terminale <a href="https://lyc-claudel-vaureal.ac-versailles.fr/" target="_blank" class="lien">Lycée Camille Claudel</a></h3>
                     <h4>Spécialité : NSI & Maths</h4>
                     <p><a href="#" class="restricted-link">Bulletin Trimestre 1</a></p>
@@ -220,11 +220,16 @@
 
     <div id="bulletinModal" class="modal">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>🛑 Hop hop hop !</h2>
-            <p>Attention, ce sont des informations très personnelles ! 🕵️‍♂️</p>
-            <p>Si vous souhaitez consulter mes bulletins, merci de me faire la demande directement par mail :</p>
-            <a href="mailto:nathan07.bergeon@gmail.com" class="mail-btn">nathan07.bergeon@gmail.com</a>
+            <span class="close-btn" aria-label="Fermer">&times;</span>
+            <h2>🛑 Hop hop hop ! 🛑</h2>
+            <p>Attention, ce sont des informations très personnelles !</p>
+            <p>Si vous souhaitez consulter mes bulletins, merci de m'en faire la demande directement sur cette adresse mail :</p>
+            
+            <!-- Conteneur pour le bouton de copie et le popup de confirmation -->
+            <div class="copy-container" style="margin-top: 15px;">
+                <button id="copyModalEmail" class="mail-btn">nathan07.bergeon@gmail.com</button>
+                <span id="modalCopyMessage" class="copy-tooltip">Copié ! ✅</span>
+            </div>
         </div>
     </div>
 

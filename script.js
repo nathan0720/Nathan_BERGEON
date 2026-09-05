@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* --- 3. COPIE EMAIL & LIEN --- */
     const emailBtn = document.getElementById('copyEmail');
     const shareBtn = document.getElementById('shareBtn');
+    const modalEmailBtn = document.getElementById('copyModalEmail'); // <-- Déclaration du bouton du popup
     
     if (emailBtn) {
         emailBtn.addEventListener('click', () => {
@@ -169,6 +170,26 @@ document.addEventListener('DOMContentLoaded', () => {
             navigator.clipboard.writeText(window.location.href).then(() => showTooltip('shareMessage'));
         });
     }
+    
+    // NOUVEAU : Gestion du clic sur le bouton email du Popup "Bulletin"
+    if (modalEmailBtn) {
+        modalEmailBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText("nathan07.bergeon@gmail.com").then(() => {
+                // 1. Affiche la bulle "Copié ! ✅"
+                showTooltip('modalCopyMessage');
+                
+                // 2. Change le texte du bouton temporairement pour renforcer l'effet
+                const originalText = modalEmailBtn.innerText;
+                modalEmailBtn.innerText = "Adresse copiée !";
+                
+                // 3. Remet l'adresse mail d'origine au bout de 2 secondes
+                setTimeout(() => {
+                    modalEmailBtn.innerText = originalText;
+                }, 2000);
+            });
+        });
+    }
+
     function showTooltip(id) {
         const el = document.getElementById(id);
         if(el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2000); }

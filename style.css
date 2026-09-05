@@ -678,46 +678,54 @@ header.nav-active {
 }
 
 .modal-content {
-    background-color: #1e1e1e;
-    color: #f1f1f1;
+    background-color: var(--bg-card); /* Fond raccord avec la DA */
+    color: var(--text-main); /* Texte blanc raccord avec la DA */
     margin: 15% auto;
     padding: 30px;
-    border: 1px solid #444;
-    border-radius: 12px;
+    border: 1px solid var(--border-color); /* Bordure subtile de ta DA */
+    border-radius: 24px; /* Même arrondi que ta modale de profil */
     width: 80%;
     max-width: 450px;
     text-align: center;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     animation: apparitionModal 0.3s ease-out;
+    position: relative; /* Indispensable pour placer la croix en haut à droite */
 }
 
 .close-btn {
-    color: #aaa;
-    float: right;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: var(--text-muted);
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
     line-height: 1;
+    transition: color 0.3s, transform 0.2s;
 }
 
 .close-btn:hover {
-    color: #ff4d4d;
+    color: var(--text-main);
+    transform: scale(1.1);
 }
 
 .mail-btn {
     display: inline-block;
-    margin-top: 15px;
     padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
+    background-color: var(--accent-blue); /* Le bleu de ton site */
+    color: #000; /* Texte noir pour contraster sur le bleu */
+    border: none;
+    border-radius: var(--radius-pill); /* Bouton en forme de pilule (comme l'accueil) */
     font-weight: bold;
-    transition: background-color 0.2s;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .mail-btn:hover {
-    background-color: #0056b3;
+    background-color: #295387; /* Bleu plus sombre au survol */
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 @keyframes apparitionModal {
